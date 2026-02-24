@@ -117,7 +117,7 @@ import pandas as pd
 import plotly.express as px
 from dash import callback, Input, Output, State, ALL, ctx
 from data import (load_portfolio, save_portfolio, add_holding,
-                  remove_holding, enrich_holdings)
+                  remove_holding, enrich_holdings, fetch_prices)
 
 
 def _pct_span(v):
@@ -198,10 +198,10 @@ def build_summary(enriched: list[dict]):
     return [
         stat("TOTAL COST",     f"${total_cost:,.2f}"),
         stat("MARKET VALUE",   f"${total_value:,.2f}"),
-        stat("TOTAL P&L",      f"{'+'if total_pnl>=0 else ''}${total_pnl:,.2f}",
+        stat("TOTAL P&L",      f"{'+' if total_pnl>=0 else ''}${total_pnl:,.2f}",
              pnl_class),
         stat("TOTAL RETURN",
-             f"{'+'if total_pct>=0 else ''}{total_pct:.2f}%", pnl_class),
+             f"{'+' if total_pct>=0 else ''}{total_pct:.2f}%", pnl_class),
     ]
 
 
@@ -277,7 +277,6 @@ def master_callback(n_add, n_refresh, n_deletes,
         if not ticker or not shares or not cost:
             error = "ERR: ticker, shares, and cost are required."
         else:
-            from data import fetch_prices
             t_up = ticker.upper().strip()
             test = fetch_prices([t_up])
             if not test or test[t_up]["price"] is None:
