@@ -1,0 +1,293 @@
+/* ── Google Fonts ──────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+/* ── Design Tokens ─────────────────────────────────────────────── */
+:root {
+  --bg:          #050609;
+  --bg-card:     #0c0e13;
+  --bg-hover:    #12151c;
+  --border:      #F0B429;
+  --border-dim:  rgba(240,180,41,0.2);
+  --accent:      #F0B429;
+  --gain:        #10B981;
+  --loss:        #EF4444;
+  --text:        #E8E8E8;
+  --text-muted:  #5a6070;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+/* ── Reset & Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(rgba(240,180,41,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--text);
+  font-family: var(--font-display);
+  min-height: 100vh;
+  letter-spacing: 0.01em;
+}
+
+/* Override Bootstrap/DBC */
+.container-fluid { background: transparent !important; }
+.card { background: transparent !important; border: none !important; }
+
+/* ── Typography ─────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.mono { font-family: var(--font-mono) !important; }
+
+/* ── Page Title ─────────────────────────────────────────────────── */
+.page-title {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border-dim);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.page-title span {
+  color: var(--text-muted);
+  font-weight: 300;
+  font-size: 0.9rem;
+  letter-spacing: 0.18em;
+  display: block;
+  margin-top: 0.15rem;
+}
+
+/* ── Panel Card ─────────────────────────────────────────────────── */
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+  transition: border-color 0.2s;
+}
+.panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--accent);
+}
+.panel:hover { border-color: var(--border); }
+
+.panel-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+/* ── Summary Stat Cards ─────────────────────────────────────────── */
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  padding: 1rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, background 0.25s;
+}
+.stat-card:hover {
+  border-color: var(--accent);
+  background: var(--bg-hover);
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+.stat-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+}
+.stat-value.gain { color: var(--gain); }
+.stat-value.loss { color: var(--loss); }
+
+/* ── Input Form ─────────────────────────────────────────────────── */
+.form-label {
+  font-size: 0.6rem !important;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted) !important;
+  margin-bottom: 0.35rem;
+}
+.form-control, .form-control:focus {
+  background: #0a0c11 !important;
+  border: 1px solid #1e2230 !important;
+  border-radius: 0 !important;
+  color: var(--text) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.85rem !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s;
+}
+.form-control:focus {
+  border-color: var(--accent) !important;
+}
+.form-control::placeholder { color: #2a2f3a !important; }
+
+/* ── Buttons ────────────────────────────────────────────────────── */
+.btn-terminal {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 0.55rem 1.1rem;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+.btn-terminal:hover {
+  background: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 0 12px rgba(240,180,41,0.4);
+}
+.btn-terminal.secondary {
+  border-color: #1e2230;
+  color: var(--text-muted);
+}
+.btn-terminal.secondary:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+  background: transparent;
+  box-shadow: none;
+}
+.btn-delete {
+  background: transparent !important;
+  border: 1px solid #1e2230 !important;
+  color: var(--text-muted) !important;
+  font-size: 0.7rem !important;
+  border-radius: 0 !important;
+  padding: 0.2rem 0.5rem !important;
+  transition: border-color 0.2s, color 0.2s !important;
+}
+.btn-delete:hover {
+  border-color: var(--loss) !important;
+  color: var(--loss) !important;
+}
+
+/* ── Holdings Table ─────────────────────────────────────────────── */
+.holdings-table { width: 100%; border-collapse: collapse; }
+.holdings-table th {
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-dim);
+  padding: 0.5rem 0.75rem;
+  white-space: nowrap;
+}
+.holdings-table td {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
+  vertical-align: middle;
+  transition: background 0.15s;
+}
+.holdings-table tr:hover td { background: var(--bg-hover); }
+.ticker-cell {
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+.name-cell {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+.gain-cell { color: var(--gain) !important; }
+.loss-cell { color: var(--loss) !important; }
+.alert-badge {
+  display: inline-block;
+  background: rgba(240,180,41,0.15);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  padding: 0.1rem 0.35rem;
+  margin-left: 0.4rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+/* ── Charts ─────────────────────────────────────────────────────── */
+.chart-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  padding: 0.5rem;
+  position: relative;
+}
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+/* ── Error Alert ────────────────────────────────────────────────── */
+.error-msg {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--loss);
+  letter-spacing: 0.06em;
+  margin-top: 0.5rem;
+  min-height: 1.2rem;
+}
+
+/* ── Empty State ────────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px dashed rgba(240,180,41,0.15);
+}
+
+/* ── Page Load Animation ────────────────────────────────────────── */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.panel, .stat-card, .chart-container {
+  animation: fadeSlideIn 0.35s ease both;
+}
+.stat-card:nth-child(1) { animation-delay: 0.05s; }
+.stat-card:nth-child(2) { animation-delay: 0.10s; }
+.stat-card:nth-child(3) { animation-delay: 0.15s; }
+.stat-card:nth-child(4) { animation-delay: 0.20s; }
