@@ -201,7 +201,7 @@ from data import (load_portfolio, save_portfolio, add_holding,
 
 def _pct_span(v):
     if v is None:
-        return html.Span("N/A", style={"color": "#5a6070"})
+        return html.Span("N/A", style={"color": "var(--text-muted)"})
     cls = "gain-cell" if v >= 0 else "loss-cell"
     sign = "+" if v >= 0 else ""
     return html.Span(f"{sign}{v:.2f}%", className=cls)
@@ -209,7 +209,7 @@ def _pct_span(v):
 
 def _usd_span(v):
     if v is None:
-        return html.Span("N/A", style={"color": "#5a6070"})
+        return html.Span("N/A", style={"color": "var(--text-muted)"})
     cls = "gain-cell" if v >= 0 else "loss-cell"
     sign = "+" if v >= 0 else ""
     return html.Span(f"{sign}${v:,.2f}", className=cls)
@@ -284,18 +284,19 @@ def build_summary(enriched: list[dict]):
     ]
 
 
-def _empty_fig(label="NO DATA"):
+def _empty_fig(label="NO DATA", theme: str = "dark"):
+    color = "#5a6070" if theme == "dark" else "#9C9890"
+    family = "Barlow Condensed" if theme == "dark" else "Source Serif 4"
     fig = go.Figure()
     fig.add_annotation(text=label, showarrow=False,
-                       font=dict(size=11, color="#5a6070",
-                                 family="Barlow Condensed"),
+                       font=dict(size=11, color=color, family=family),
                        xref="paper", yref="paper", x=0.5, y=0.5)
     return fig
 
 
 def build_charts(enriched: list[dict], theme: str = "dark"):
     if not enriched:
-        return _empty_fig(), _empty_fig(), _empty_fig()
+        return _empty_fig(theme=theme), _empty_fig(theme=theme), _empty_fig(theme=theme)
 
     tmpl = get_chart_template(theme)
     colors = _COLORS if theme == "dark" else _MUJI_COLORS
@@ -351,7 +352,7 @@ def build_charts(enriched: list[dict], theme: str = "dark"):
     State("input-shares", "value"),
     State("input-cost", "value"),
     State("input-target", "value"),
-    State("theme-store", "data"),
+    Input("theme-store", "data"),
     prevent_initial_call=False,
 )
 def master_callback(n_add, n_refresh, n_deletes,
