@@ -193,6 +193,8 @@ def cb_toggle_theme(n_clicks, current_theme):
     light_cls = "toggle-opt active" if new_theme == "light" else "toggle-opt"
     title_color = "#F0B429" if new_theme == "dark" else "#2C2A27"
     return new_theme, dark_cls, light_cls, {"color": title_color}
+
+
 from data import (load_portfolio, save_portfolio, add_holding,
                   remove_holding, enrich_holdings, fetch_prices)
 
