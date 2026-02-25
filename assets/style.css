@@ -331,3 +331,74 @@ h1, h2, h3, h4, h5 {
 .stat-card:nth-child(2) { animation-delay: 0.10s; }
 .stat-card:nth-child(3) { animation-delay: 0.15s; }
 .stat-card:nth-child(4) { animation-delay: 0.20s; }
+
+/* ── Light Mode: MUJI Typography Overrides ─────────────────────── */
+.theme-light .panel-label,
+.theme-light .stat-label,
+.theme-light .holdings-table th,
+.theme-light .form-label {
+  font-family: var(--font-serif) !important;
+  text-transform: none;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+}
+
+.theme-light .page-title {
+  font-family: var(--font-serif) !important;
+  font-weight: 300;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 2rem;
+}
+
+.theme-light .page-title span {
+  font-family: var(--font-serif) !important;
+  letter-spacing: 0.04em;
+}
+
+/* ── Light Mode: P&L Direction via Weight, Not Color ────────────── */
+.theme-light .gain-cell {
+  color: var(--gain) !important;
+  font-weight: 600;
+}
+.theme-light .loss-cell {
+  color: var(--loss) !important;
+  font-weight: 400;
+}
+
+/* ── Light Mode: Bootstrap DARKLY overrides ─────────────────────── */
+.theme-light .form-control,
+.theme-light .form-control:focus {
+  background: #F0EDE6 !important;
+  border-color: rgba(44,42,39,0.2) !important;
+  color: #2C2A27 !important;
+}
+.theme-light .form-control::placeholder {
+  color: #B8B4AE !important;
+}
+.theme-light .btn-terminal {
+  border-color: #2C2A27 !important;
+  color: #2C2A27 !important;
+}
+.theme-light .btn-terminal:hover {
+  background: #2C2A27 !important;
+  color: #F5F3EF !important;
+  box-shadow: none !important;
+}
+.theme-light .btn-terminal.secondary {
+  border-color: rgba(44,42,39,0.25) !important;
+  color: var(--text-muted) !important;
+}
+.theme-light .alert-badge {
+  background: rgba(44,42,39,0.08) !important;
+  border-color: #2C2A27 !important;
+  color: #2C2A27 !important;
+}
+.theme-light .empty-state {
+  border-color: rgba(44,42,39,0.2);
+  color: var(--text-muted);
+}
+
+.panel, .stat-card, .chart-container, .holdings-table td {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
