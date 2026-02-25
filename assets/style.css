@@ -1,6 +1,23 @@
 /* ── Google Fonts ──────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:wght@300;400&display=swap');
 
+/* ── Design Token Defaults (dark theme fallback) ────────────────── */
+:root {
+  --bg:          #0f1117;
+  --bg-card:     #181b24;
+  --bg-hover:    #1e2230;
+  --border:      #F0B429;
+  --border-dim:  rgba(240,180,41,0.3);
+  --accent:      #F0B429;
+  --gain:        #10B981;
+  --loss:        #EF4444;
+  --text:        #F0F0F0;
+  --text-muted:  #7a8494;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --font-serif:   'Barlow Condensed', sans-serif;
+}
+
 /* ── Design Tokens: Dark (Bloomberg Terminal) ───────────────────── */
 .theme-dark {
   --bg:          #0f1117;
