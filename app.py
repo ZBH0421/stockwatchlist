@@ -293,9 +293,12 @@ def _empty_fig(label="NO DATA"):
     return fig
 
 
-def build_charts(enriched: list[dict]):
+def build_charts(enriched: list[dict], theme: str = "dark"):
     if not enriched:
         return _empty_fig(), _empty_fig(), _empty_fig()
+
+    tmpl = get_chart_template(theme)
+    colors = _COLORS if theme == "dark" else _MUJI_COLORS
 
     df = pd.DataFrame(enriched)
 
@@ -303,9 +306,10 @@ def build_charts(enriched: list[dict]):
     mv_df = df[df["market_value"].notna()]
     fig1 = px.pie(mv_df, values="market_value", names="ticker",
                   title="MARKET VALUE", hole=0.42,
-                  color_discrete_sequence=_COLORS)
+                  color_discrete_sequence=colors)
     fig1.update_traces(textfont_family="JetBrains Mono",
                        hovertemplate="<b>%{label}</b><br>$%{value:,.0f}<extra></extra>")
+    fig1.update_layout(template=tmpl)
 
     # Chart 2: sector pie
     s_df = mv_df.copy()
@@ -313,19 +317,22 @@ def build_charts(enriched: list[dict]):
     sector_agg = s_df.groupby("sector")["market_value"].sum().reset_index()
     fig2 = px.pie(sector_agg, values="market_value", names="sector",
                   title="SECTOR", hole=0.42,
-                  color_discrete_sequence=_COLORS[1:] + _COLORS[:1])
+                  color_discrete_sequence=colors[1:] + colors[:1])
     fig2.update_traces(textfont_family="JetBrains Mono")
+    fig2.update_layout(template=tmpl)
 
     # Chart 3: P&L bar
     pnl_df = df[df["pnl"].notna()].sort_values("pnl")
-    colors = [("#10B981" if v >= 0 else "#EF4444") for v in pnl_df["pnl"]]
+    bar_colors = (["#10B981" if v >= 0 else "#EF4444" for v in pnl_df["pnl"]]
+                  if theme == "dark"
+                  else ["#6B6560" if v >= 0 else "#B8AFA6" for v in pnl_df["pnl"]])
     fig3 = go.Figure(go.Bar(
         x=pnl_df["ticker"], y=pnl_df["pnl"],
-        marker_color=colors,
+        marker_color=bar_colors,
         hovertemplate="<b>%{x}</b><br>P&L: $%{y:,.2f}<extra></extra>",
     ))
     fig3.update_layout(title_text="P&L", bargap=0.35,
-                       yaxis_tickprefix="$")
+                       yaxis_tickprefix="$", template=tmpl)
 
     return fig1, fig2, fig3
 
@@ -344,10 +351,11 @@ def build_charts(enriched: list[dict]):
     State("input-shares", "value"),
     State("input-cost", "value"),
     State("input-target", "value"),
+    State("theme-store", "data"),
     prevent_initial_call=False,
 )
 def master_callback(n_add, n_refresh, n_deletes,
-                    ticker, shares, cost, target):
+                    ticker, shares, cost, target, theme):
     holdings = load_portfolio()
     error = ""
     triggered_id = ctx.triggered_id
@@ -381,7 +389,7 @@ def master_callback(n_add, n_refresh, n_deletes,
 
     table = build_table(enriched)
     summary = build_summary(enriched) if enriched else []
-    fig1, fig2, fig3 = build_charts(enriched)
+    fig1, fig2, fig3 = build_charts(enriched, theme or "dark")
     return table, summary, fig1, fig2, fig3, error
 
 
