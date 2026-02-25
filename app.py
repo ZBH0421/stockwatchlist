@@ -28,6 +28,45 @@ pio.templates["bloomberg"] = go.layout.Template(
 )
 pio.templates.default = "bloomberg"
 
+# ── MUJI Plotly Theme ────────────────────────────────────────────────
+_MUJI_COLORS = ["#A0998E", "#6B6560", "#C4B9AA", "#8C8882",
+                "#D4CEC6", "#4A4540", "#B8AFA6", "#7A7470"]
+
+pio.templates["muji"] = go.layout.Template(
+    layout=go.Layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="JetBrains Mono, monospace", color="#2C2A27", size=11),
+        title=dict(font=dict(family="Source Serif 4, serif",
+                             size=13, color="#9C9890"),
+                   x=0.01, xanchor="left"),
+        colorway=_MUJI_COLORS,
+        legend=dict(bgcolor="rgba(0,0,0,0)", bordercolor="rgba(44,42,39,0.15)",
+                    borderwidth=1),
+        margin=dict(l=30, r=20, t=40, b=30),
+        xaxis=dict(gridcolor="#D4CEC6", linecolor="#D4CEC6",
+                   tickfont=dict(size=10)),
+        yaxis=dict(gridcolor="#D4CEC6", linecolor="#D4CEC6",
+                   tickfont=dict(size=10)),
+        hoverlabel=dict(bgcolor="#EDEAE3", bordercolor="#2C2A27",
+                        font=dict(family="JetBrains Mono", size=11,
+                                  color="#2C2A27")),
+    )
+)
+
+
+def get_chart_template(theme: str) -> str:
+    """Return the Plotly template name for the given theme."""
+    return "bloomberg" if theme == "dark" else "muji"
+
+
+def toggle_theme(n_clicks: int, current_theme: str) -> str:
+    """Flip theme between dark and light; no-op if n_clicks is 0."""
+    if not n_clicks:
+        return current_theme
+    return "light" if current_theme == "dark" else "dark"
+
+
 import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, html
