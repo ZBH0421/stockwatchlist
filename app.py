@@ -140,12 +140,22 @@ charts_section = dbc.Row([
 ], className="g-2 mb-3")
 
 app.layout = dbc.Container([
+    dcc.Store(id="theme-store", data="dark"),
+    html.Div(id="theme-dummy", style={"display": "none"}),
     html.Div([
         html.Div([
-            html.Span("WATCHLIST", style={"color": "#F0B429"}),
+            html.Span("WATCHLIST", id="title-watchlist",
+                      style={"color": "#F0B429"}),
             html.Span(" /  PORTFOLIO TRACKER"),
         ], className="page-title"),
-    ]),
+        html.Button([
+            html.Span("Terminal", id="toggle-dark-label",
+                      className="toggle-opt active"),
+            html.Span("Muji", id="toggle-light-label",
+                      className="toggle-opt"),
+        ], id="btn-theme-toggle", n_clicks=0,
+           className="btn-theme-toggle"),
+    ], className="header-row"),
     input_form,
     summary_bar,
     holdings_section,
@@ -154,7 +164,35 @@ app.layout = dbc.Container([
 
 import pandas as pd
 import plotly.express as px
-from dash import callback, Input, Output, State, ALL, ctx
+from dash import callback, clientside_callback, Input, Output, State, ALL, ctx
+
+clientside_callback(
+    """
+    function(theme) {
+        document.body.className = 'theme-' + theme;
+        return '';
+    }
+    """,
+    Output("theme-dummy", "children"),
+    Input("theme-store", "data"),
+)
+
+
+@callback(
+    Output("theme-store", "data"),
+    Output("toggle-dark-label", "className"),
+    Output("toggle-light-label", "className"),
+    Output("title-watchlist", "style"),
+    Input("btn-theme-toggle", "n_clicks"),
+    State("theme-store", "data"),
+    prevent_initial_call=True,
+)
+def cb_toggle_theme(n_clicks, current_theme):
+    new_theme = toggle_theme(n_clicks, current_theme)
+    dark_cls = "toggle-opt active" if new_theme == "dark" else "toggle-opt"
+    light_cls = "toggle-opt active" if new_theme == "light" else "toggle-opt"
+    title_color = "#F0B429" if new_theme == "dark" else "#2C2A27"
+    return new_theme, dark_cls, light_cls, {"color": title_color}
 from data import (load_portfolio, save_portfolio, add_holding,
                   remove_holding, enrich_holdings, fetch_prices)
 
