@@ -1,20 +1,38 @@
 /* ── Google Fonts ──────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:wght@300;400&display=swap');
 
-/* ── Design Tokens ─────────────────────────────────────────────── */
-:root {
-  --bg:          #050609;
-  --bg-card:     #0c0e13;
-  --bg-hover:    #12151c;
+/* ── Design Tokens: Dark (Bloomberg Terminal) ───────────────────── */
+.theme-dark {
+  --bg:          #0f1117;
+  --bg-card:     #181b24;
+  --bg-hover:    #1e2230;
   --border:      #F0B429;
-  --border-dim:  rgba(240,180,41,0.2);
+  --border-dim:  rgba(240,180,41,0.3);
   --accent:      #F0B429;
   --gain:        #10B981;
   --loss:        #EF4444;
-  --text:        #E8E8E8;
-  --text-muted:  #5a6070;
+  --text:        #F0F0F0;
+  --text-muted:  #7a8494;
   --font-display: 'Barlow Condensed', sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
+  --font-serif:   'Barlow Condensed', sans-serif;
+}
+
+/* ── Design Tokens: Light (MUJI Natural) ────────────────────────── */
+.theme-light {
+  --bg:          #F5F3EF;
+  --bg-card:     #EDEAE3;
+  --bg-hover:    #E4E0D8;
+  --border:      #2C2A27;
+  --border-dim:  rgba(44,42,39,0.15);
+  --accent:      #2C2A27;
+  --gain:        #2C2A27;
+  --loss:        #9C9890;
+  --text:        #2C2A27;
+  --text-muted:  #9C9890;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --font-serif:   'Source Serif 4', serif;
 }
 
 /* ── Reset & Base ───────────────────────────────────────────────── */
@@ -22,12 +40,17 @@
 
 body {
   background-color: var(--bg);
-  background-image: radial-gradient(rgba(240,180,41,0.04) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(240,180,41,0.08) 1px, transparent 1px);
   background-size: 28px 28px;
   color: var(--text);
   font-family: var(--font-display);
   min-height: 100vh;
   letter-spacing: 0.01em;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.theme-light {
+  background-image: none;
 }
 
 /* Override Bootstrap/DBC */
