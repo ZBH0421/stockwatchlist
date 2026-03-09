@@ -395,4 +395,4 @@ def master_callback(n_add, n_refresh, n_deletes,
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8052)
+    app.run(debug=True, port=0)

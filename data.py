@@ -53,7 +53,8 @@ def fetch_prices(tickers: list[str]) -> dict[str, dict]:
     result = {}
     try:
         data = yf.download(tickers, period="2d", auto_adjust=True, progress=False)
-        closes = data["Close"] if len(tickers) > 1 else data["Close"].rename(tickers[0])
+        # yfinance 1.2.0+ always returns MultiIndex DataFrame regardless of ticker count
+        closes = data["Close"]
     except Exception:
         closes = None
 
@@ -61,7 +62,7 @@ def fetch_prices(tickers: list[str]) -> dict[str, dict]:
         price = None
         if closes is not None:
             try:
-                col = closes[t] if len(tickers) > 1 else closes
+                col = closes[t] if t in closes.columns else closes.iloc[:, 0]
                 price = float(col.dropna().iloc[-1])
             except Exception:
                 pass

@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "ticker": "ONDS",
+    "name": "Ondas Inc",
+    "sector": "Technology",
+    "shares": 100.0,
+    "cost_price": 5.8,
+    "target_price": null
+  }
+]
